@@ -6,6 +6,14 @@
   <title>Pinoy Legends — A Competitive MOBA</title>
   <meta name="description" content="Pinoy Legends is an upcoming competitive multiplayer MOBA. Join the community and get ready for closed alpha and beta testing." />
   <meta name="theme-color" content="#030712" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" sizes="48x48" />
+  <link rel="icon" type="image/png" href="assets/favicon-32.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta property="og:title" content="Pinoy Legends — A Competitive MOBA" />
+  <meta property="og:description" content="An upcoming competitive multiplayer MOBA. Join the community and get ready for closed alpha and beta testing." />
+  <meta property="og:image" content="assets/discord-banner.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -16,11 +24,18 @@
 
   <header class="site-header">
     <div class="container navbar">
-      <a class="nav-brand" href="index.html">PINOY <em>LEGENDS</em></a>
+      <a class="nav-brand" href="index.html">
+        <img class="nav-logo" src="assets/logo.png" alt="Pinoy Legends" width="256" height="256" />
+        <span class="nav-brand-text" aria-hidden="true">PINOY <em>LEGENDS</em></span>
+      </a>
 
       <input type="checkbox" id="nav-toggle" class="nav-toggle-input" />
 
       <ul class="nav-links">
+        <li class="nav-links__cta">
+          <!-- Replace href with the live server hub / Discord invite link -->
+          <a class="btn btn--block" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
+        </li>
         <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="influencer.html">Creator Program</a></li>
         <li><a href="staff.html">Staff</a></li>
@@ -28,7 +43,7 @@
 
       <div class="nav-actions">
         <!-- Replace href with the live server hub / Discord invite link -->
-        <a class="btn btn--nav" href="https://discord.gg/RmquFMTg4E" target="_blank" rel="noopener">Join the Community</a>
+        <a class="btn btn--nav" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
         <label class="nav-toggle-label" for="nav-toggle" aria-label="Toggle navigation menu">
           <span></span><span></span><span></span>
         </label>
@@ -41,13 +56,13 @@
       <p class="hero-kicker">COMPETITIVE MULTIPLAYER MOBA — IN DEVELOPMENT</p>
       <h1 class="hero-title">Pinoy Legends</h1>
       <p class="hero-subtitle">
-        Ten legends of pride, one battlefield. Pinoy Legends is entering structured
+        Ten lanes of pride, one battlefield. Pinoy Legends is entering structured
         alpha and beta testing as we tune heroes, balance, and matchmaking ahead
         of launch. Join the community to get testing access as slots open.
       </p>
       <div class="hero-actions">
         <!-- Replace href with the live server hub / Discord invite link -->
-        <a class="btn" href="https://discord.gg/RmquFMTg4E" target="_blank" rel="noopener">Join the Community</a>
+        <a class="btn" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
         <a class="btn btn--ghost" href="influencer.html">Creator Program</a>
       </div>
     </section>
@@ -108,14 +123,23 @@
     </section>
 
     <section class="section container">
-      <div class="game-panel" style="text-align:center; padding-block: clamp(2.5rem, 5vw, 4rem);">
-        <h2 class="section-title" style="margin-bottom:0.5rem;">Be there for the first patch</h2>
-        <p style="margin-inline:auto; margin-bottom:1.75rem;">
+      <div class="section-head section-head--center">
+        <p class="eyebrow">Community</p>
+        <h2 class="section-title">Be there for the first patch</h2>
+        <p style="margin-inline:auto;">
           The community server is where testing invites, patch notes, and balance
           discussions happen first. No spam, just the people building this game with us.
         </p>
+      </div>
+
+      <!-- Replace href with the live server hub / Discord invite link -->
+      <a class="community-banner game-panel game-panel--flush" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener" aria-label="Join the official Pinoy Legends Discord server">
+        <img src="assets/discord-banner.jpg" alt="Pinoy Legends — Official Discord Server. One community, one legacy." width="1600" height="900" loading="lazy" />
+      </a>
+
+      <div style="text-align:center; margin-top:1.75rem;">
         <!-- Replace href with the live server hub / Discord invite link -->
-        <a class="btn" href="https://discord.gg/RmquFMTg4E" target="_blank" rel="noopener">Join the Community</a>
+        <a class="btn" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
       </div>
     </section>
   </main>
@@ -131,7 +155,7 @@
           <a href="index.html">Home</a>
           <a href="influencer.html">Creator Program</a>
           <a href="staff.html">Staff</a>
-          <a href="https://discord.gg/RmquFMTg4E" target="_blank" rel="noopener">Community Server</a>
+          <a href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Community Server</a>
         </nav>
       </div>
       <div class="footer-bottom">

@@ -259,8 +259,8 @@ strong {
 
 .nav-brand {
   display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--font-display);
   font-size: clamp(1.05rem, 0.85rem + 0.7vw, 1.4rem);
   letter-spacing: 0.06em;
@@ -268,15 +268,52 @@ strong {
   white-space: nowrap;
 }
 
+.nav-logo {
+  width: clamp(2.1rem, 1.8rem + 0.6vw, 2.5rem);
+  height: clamp(2.1rem, 1.8rem + 0.6vw, 2.5rem);
+  flex-shrink: 0;
+}
+
 .nav-brand em {
   font-style: normal;
   color: var(--color-jewel-light);
+}
+
+@media (max-width: 420px) {
+  .nav-brand-text {
+    display: none;
+  }
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.nav-actions > .btn--nav {
+  display: none;
+}
+
+.nav-links__cta {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+}
+
+.nav-links .nav-links__cta a {
+  border-bottom: none;
+  padding: 0;
+}
+
+@media (min-width: 900px) {
+  .nav-actions > .btn--nav {
+    display: inline-flex;
+  }
+
+  .nav-links__cta {
+    display: none;
+  }
 }
 
 .nav-toggle-input {
@@ -778,7 +815,31 @@ strong {
 }
 
 /* --------------------------------------------------------------------------
-   16. ACCESSIBILITY / MOTION
+   16. COMMUNITY BANNER (Discord banner, index.html)
+   -------------------------------------------------------------------------- */
+.community-banner {
+  display: block;
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+
+.community-banner img {
+  width: 100%;
+  height: auto;
+}
+
+.community-banner:hover,
+.community-banner:focus-visible {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 0 0 4px rgba(3, 7, 18, 0.65),
+    inset 0 0 0 5px rgba(212, 175, 55, 0.16),
+    0 0 0 1px var(--color-gold-light),
+    0 0 34px rgba(212, 175, 55, 0.45),
+    var(--shadow-panel);
+}
+
+/* --------------------------------------------------------------------------
+   17. ACCESSIBILITY / MOTION
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,

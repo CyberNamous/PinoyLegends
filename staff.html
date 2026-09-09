@@ -6,6 +6,14 @@
   <title>Leadership Roster — Pinoy Legends</title>
   <meta name="description" content="Meet the leadership team behind Pinoy Legends: development, community, and staff operations." />
   <meta name="theme-color" content="#030712" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" sizes="48x48" />
+  <link rel="icon" type="image/png" href="assets/favicon-32.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta property="og:title" content="Leadership Roster — Pinoy Legends" />
+  <meta property="og:description" content="Meet the leadership team behind Pinoy Legends: development, community, and staff operations." />
+  <meta property="og:image" content="assets/discord-banner.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -16,11 +24,18 @@
 
   <header class="site-header">
     <div class="container navbar">
-      <a class="nav-brand" href="index.html">PINOY <em>LEGENDS</em></a>
+      <a class="nav-brand" href="index.html">
+        <img class="nav-logo" src="assets/logo.png" alt="Pinoy Legends" width="256" height="256" />
+        <span class="nav-brand-text" aria-hidden="true">PINOY <em>LEGENDS</em></span>
+      </a>
 
       <input type="checkbox" id="nav-toggle" class="nav-toggle-input" />
 
       <ul class="nav-links">
+        <li class="nav-links__cta">
+          <!-- Replace href with the live server hub / Discord invite link -->
+          <a class="btn btn--block" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
+        </li>
         <li><a href="index.html">Home</a></li>
         <li><a href="influencer.html">Creator Program</a></li>
         <li><a href="staff.html" aria-current="page">Staff</a></li>

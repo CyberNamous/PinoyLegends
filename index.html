@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Pinoy Legends — A Competitive MOBA</title>
-  <meta name="description" content="Pinoy Legends is an upcoming competitive multiplayer MOBA. Join the community and get ready for closed alpha and beta testing." />
+  <title>Pinoy Legends — A Competitive Mobile MOBA</title>
+  <meta name="description" content="Pinoy Legends is an upcoming competitive mobile MOBA. Meet the heroes, follow the news, and join the community." />
   <meta name="theme-color" content="#030712" />
   <link rel="icon" type="image/png" href="assets/favicon.png" sizes="48x48" />
   <link rel="icon" type="image/png" href="assets/favicon-32.png" sizes="32x32" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <meta property="og:title" content="Pinoy Legends — A Competitive MOBA" />
-  <meta property="og:description" content="An upcoming competitive multiplayer MOBA. Join the community and get ready for closed alpha and beta testing." />
+  <meta property="og:title" content="Pinoy Legends — A Competitive Mobile MOBA" />
+  <meta property="og:description" content="Meet the heroes, follow the news, and join the community." />
   <meta property="og:image" content="assets/discord-banner.jpg" />
   <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -25,121 +24,129 @@
   <header class="site-header">
     <div class="container navbar">
       <a class="nav-brand" href="index.html">
-        <img class="nav-logo" src="logo.png" alt="Pinoy Legends" width="256" height="256" />
-        <span class="nav-brand-text" aria-hidden="true">PINOY <em>LEGENDS</em></span>
+        <img class="nav-logo" src="assets/logo.png" alt="" width="40" height="40" onerror="this.style.display='none'" />
+        <span>PINOY LEGENDS</span>
       </a>
-
       <input type="checkbox" id="nav-toggle" class="nav-toggle-input" />
-
       <ul class="nav-links">
-        <li class="nav-links__cta">
-          <!-- Replace href with the live server hub / Discord invite link -->
-          <a class="btn btn--block" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
-        </li>
-        <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="influencer.html">Creator Program</a></li>
-        <li><a href="staff.html">Staff</a></li>
+        <li><a href="#heroes">Heroes</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="subdomains/influencer.html">Creator Program</a></li>
+        <li><a href="subdomains/staff.html">Staff</a></li>
+        <li class="nav-cta"><a class="btn" href="https://discord.gg/YOUR-INVITE-CODE" target="_blank" rel="noopener">Join Discord</a></li>
       </ul>
-
       <div class="nav-actions">
-        <!-- Replace href with the live server hub / Discord invite link -->
-        <a class="btn btn--nav" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
-        <label class="nav-toggle-label" for="nav-toggle" aria-label="Toggle navigation menu">
-          <span></span><span></span><span></span>
-        </label>
+        <!-- TODO: replace with the real Discord invite link -->
+        <a class="btn btn--nav" href="https://discord.gg/YOUR-INVITE-CODE" target="_blank" rel="noopener">Join Discord</a>
+        <label class="nav-toggle-label" for="nav-toggle" aria-label="Toggle navigation menu"><span></span><span></span><span></span></label>
       </div>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero container">
-      <p class="hero-kicker">COMPETITIVE MULTIPLAYER MOBA — IN DEVELOPMENT</p>
-      <h1 class="hero-title">Pinoy Legends</h1>
-      <p class="hero-subtitle">
-        Ten legends of pride, one battlefield. Pinoy Legends is entering structured
-        alpha and beta testing as we tune heroes, balance, and matchmaking ahead
-        of launch. Join the community to get testing access as slots open.
-      </p>
-      <div class="hero-actions">
-        <!-- Replace href with the live server hub / Discord invite link -->
-        <a class="btn" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
-        <a class="btn btn--ghost" href="influencer.html">Creator Program</a>
+    <!-- Hero -->
+    <section class="hero">
+      <svg class="sun" viewBox="-500 -500 1000 1000" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id="fade" gradientUnits="userSpaceOnUse" r="500"><stop offset=".2" stop-color="#f4b942"/><stop offset="1" stop-color="#f4b942" stop-opacity="0"/></radialGradient>
+          <polygon id="rm" points="-30,-130 30,-130 0,-490"/><polygon id="rn" points="-10,-130 10,-130 0,-330"/>
+        </defs>
+        <g fill="url(#fade)">
+          <use href="#rm"/><use href="#rm" transform="rotate(45)"/><use href="#rm" transform="rotate(90)"/><use href="#rm" transform="rotate(135)"/>
+          <use href="#rm" transform="rotate(180)"/><use href="#rm" transform="rotate(225)"/><use href="#rm" transform="rotate(270)"/><use href="#rm" transform="rotate(315)"/>
+          <use href="#rn" transform="rotate(22.5)"/><use href="#rn" transform="rotate(67.5)"/><use href="#rn" transform="rotate(112.5)"/><use href="#rn" transform="rotate(157.5)"/>
+          <use href="#rn" transform="rotate(202.5)"/><use href="#rn" transform="rotate(247.5)"/><use href="#rn" transform="rotate(292.5)"/><use href="#rn" transform="rotate(337.5)"/>
+        </g>
+        <circle r="100" fill="none" stroke="#f4b942" stroke-width="6"/>
+      </svg>
+      <div class="container hero-grid">
+        <div>
+          <h1>Fight for your lane. Play for your pride.</h1>
+          <p class="lede">Pinoy Legends is a competitive 5v5 mobile MOBA built for fast matches, readable team fights, and a hero roster worth mastering.</p>
+          <div class="actions">
+            <a class="btn" href="#download">Join the Testing</a>
+            <a class="btn btn--ghost" href="https://discord.gg/YOUR-INVITE-CODE" target="_blank" rel="noopener">Join Discord</a>
+          </div>
+        </div>
+        <!-- Replace with key art: <img src="assets/key-art.jpg" alt="..." width="800" height="1000"> -->
+        <div class="ph" data-label="Key art placeholder"></div>
       </div>
     </section>
 
-    <section class="section container">
-      <div class="section-head">
-        <p class="eyebrow">About the game</p>
-        <h2 class="section-title">Built for the ranked ladder</h2>
-        <p>
-          Pinoy Legends is a 5v5 competitive MOBA built from the ground up for
-          fast decision-making, clean readability in team fights, and a hero
-          roster designed to reward mastery over grind. Every system in the
-          game — matchmaking, itemization, map design — is being stress-tested
-          with the community before it reaches ranked play.
-        </p>
-      </div>
-
-      <div class="grid grid--3">
-        <article class="game-panel">
-          <h3>Skill-first combat</h3>
-          <p>Clear counterplay windows and readable ability telegraphs, tuned so outplays come from decision-making, not obscurity.</p>
-        </article>
-        <article class="game-panel">
-          <h3>Living balance</h3>
-          <p>Alpha and beta data feeds directly into hero and itemization passes — the roster you test is the roster you help shape.</p>
-        </article>
-        <article class="game-panel">
-          <h3>Built for the scene</h3>
-          <p>Spectator tools, clean UI, and a roadmap toward organized competitive play from day one.</p>
-        </article>
+    <!-- Heroes -->
+    <section class="section" id="heroes">
+      <div class="container">
+        <div class="section-head">
+          <h2>Meet the heroes</h2>
+          <p>Every hero brings a different role to the fight. More are on the way.</p>
+        </div>
+        <!-- Replace each .ph with <img src="assets/heroes/name.jpg" alt="Hero name"> and fill in name and role -->
+        <div class="heroes">
+          <article class="hero-card"><div class="ph" data-label="Hero art"></div><h3>Hero Name</h3><p>Tank</p></article>
+          <article class="hero-card"><div class="ph" data-label="Hero art"></div><h3>Hero Name</h3><p>Mage</p></article>
+          <article class="hero-card"><div class="ph" data-label="Hero art"></div><h3>Hero Name</h3><p>Marksman</p></article>
+          <article class="hero-card"><div class="ph" data-label="Hero art"></div><h3>Hero Name</h3><p>Assassin</p></article>
+          <article class="hero-card"><div class="ph" data-label="Hero art"></div><h3>Hero Name</h3><p>Support</p></article>
+          <article class="hero-card"><div class="ph" data-label="Hero art"></div><h3>Hero Name</h3><p>Fighter</p></article>
+        </div>
       </div>
     </section>
 
-    <section class="section container">
-      <div class="section-head">
-        <p class="eyebrow">Testing roadmap</p>
-        <h2 class="section-title">Three phases to launch</h2>
-        <p>Access opens in stages. Each phase widens the player pool and narrows what's left to fix before Pinoy Legends goes live.</p>
-      </div>
-
-      <div class="grid grid--3 grid--align-top">
-        <article class="game-panel">
-          <p class="eyebrow">Phase 01</p>
-          <h3>Closed Alpha</h3>
-          <p>Small-scale invite testing focused on core combat feel, server stability, and first-pass hero balance.</p>
-        </article>
-        <article class="game-panel">
-          <p class="eyebrow">Phase 02</p>
-          <h3>Closed Beta</h3>
-          <p>Expanded invites, ranked matchmaking prototypes, and the first community-facing balance patches.</p>
-        </article>
-        <article class="game-panel">
-          <p class="eyebrow">Phase 03</p>
-          <h3>Open Beta</h3>
-          <p>Public access ahead of launch, with the roster, map, and systems locked toward their release state.</p>
-        </article>
+    <!-- Gameplay -->
+    <section class="section band">
+      <div class="container split">
+        <div class="section-head" style="margin:0">
+          <h2>See it in action</h2>
+          <p>Watch the latest gameplay trailer and see how a full match plays out, from the first minion wave to the final push.</p>
+        </div>
+        <!-- Replace with a video embed or <video> tag -->
+        <div class="trailer"><div class="ph" data-label="Trailer placeholder"></div><span class="play" aria-hidden="true"></span></div>
       </div>
     </section>
 
-    <section class="section container">
-      <div class="section-head section-head--center">
-        <p class="eyebrow">Community</p>
-        <h2 class="section-title">Be there for the first patch</h2>
-        <p style="margin-inline:auto;">
-          The community server is where testing invites, patch notes, and balance
-          discussions happen first. No spam, just the people building this game with us.
-        </p>
+    <!-- News -->
+    <section class="section" id="news">
+      <div class="container">
+        <div class="section-head">
+          <h2>Latest news</h2>
+          <p>Patch notes, testing updates, and announcements from the team.</p>
+        </div>
+        <div class="news">
+          <article class="news-card"><div class="ph" data-label="News image"></div><div class="news-body"><time>Date</time><h3>News headline</h3><p>A short summary of the update goes here.</p></div></article>
+          <article class="news-card"><div class="ph" data-label="News image"></div><div class="news-body"><time>Date</time><h3>News headline</h3><p>A short summary of the update goes here.</p></div></article>
+          <article class="news-card"><div class="ph" data-label="News image"></div><div class="news-body"><time>Date</time><h3>News headline</h3><p>A short summary of the update goes here.</p></div></article>
+        </div>
       </div>
+    </section>
 
-      <!-- Replace href with the live server hub / Discord invite link -->
-      <a class="community-banner game-panel game-panel--flush" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener" aria-label="Join the official Pinoy Legends Discord server">
-        <img src="discord-banner.jpg" alt="Pinoy Legends — Official Discord Server. One community, one legacy." width="1600" height="900" loading="lazy" />
-      </a>
+    <!-- Download -->
+    <section class="section band" id="download">
+      <div class="container split">
+        <div class="section-head" style="margin:0">
+          <h2>Get the game</h2>
+          <p>Pinoy Legends is coming to mobile. Join the community to get testing access as slots open.</p>
+        </div>
+        <div class="stores">
+          <!-- TODO: replace # with the store links when live -->
+          <a class="store" href="#"><small>Coming soon on the</small><strong>App Store</strong></a>
+          <a class="store" href="#"><small>Coming soon on</small><strong>Google Play</strong></a>
+        </div>
+      </div>
+    </section>
 
-      <div style="text-align:center; margin-top:1.75rem;">
-        <!-- Replace href with the live server hub / Discord invite link -->
-        <a class="btn" href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Join the Community</a>
+    <!-- Community -->
+    <section class="section">
+      <div class="container split">
+        <div class="section-head" style="margin:0">
+          <h2>Join the community</h2>
+          <p>Testing invites, patch notes, and balance talks happen first on the official Discord server.</p>
+          <div class="actions" style="margin-top:1.5rem">
+            <a class="btn" href="https://discord.gg/YOUR-INVITE-CODE" target="_blank" rel="noopener">Join the Official Discord</a>
+          </div>
+        </div>
+        <!-- Replace with <img src="assets/discord-banner.jpg" alt="Pinoy Legends Official Discord Server"> -->
+        <div class="ph" data-label="Community banner"></div>
       </div>
     </section>
   </main>
@@ -147,21 +154,12 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand">
-          PINOY LEGENDS
-          <p>An upcoming competitive multiplayer MOBA, currently in active development.</p>
-        </div>
+        <p style="margin:0;max-width:24rem">Pinoy Legends is an upcoming competitive mobile MOBA, currently in active development.</p>
         <nav class="footer-links" aria-label="Footer">
-          <a href="index.html">Home</a>
-          <a href="influencer.html">Creator Program</a>
-          <a href="staff.html">Staff</a>
-          <a href="https://discord.gg/pinoylegends" target="_blank" rel="noopener">Community Server</a>
+          <a href="#heroes">Heroes</a><a href="#news">News</a><a href="subdomains/influencer.html">Creator Program</a><a href="subdomains/staff.html">Staff</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
         </nav>
       </div>
-      <div class="footer-bottom">
-        <span>&copy; 2026 Pinoy Legends. All rights reserved.</span>
-        <span>Assets and gameplay subject to change during testing.</span>
-      </div>
+      <p class="footer-bottom">&copy; 2026 Pinoy Legends. All rights reserved. Assets and gameplay subject to change during testing.</p>
     </div>
   </footer>
 </body>

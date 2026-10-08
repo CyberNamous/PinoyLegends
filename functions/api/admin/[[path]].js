@@ -1,6 +1,6 @@
 const J = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
 const b64u = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
-const T = { news: ['title', 'body', 'image', 'date'], heroes: ['name', 'role', 'image', 'sort'], staff: ['name', 'role', 'grp', 'badge', 'tone', 'sort'] };
+const T = { news: ['title', 'body', 'image'], heroes: ['name', 'role', 'image', 'sort'], staff: ['name', 'role', 'grp', 'badge', 'tone', 'sort'] };
 
 // Verifies the Cloudflare Access login token. Fails closed if not configured.
 async function isAdmin(req, env) {
@@ -34,16 +34,25 @@ export async function onRequest({ request: req, env, params }) {
   }
 
   if (T[seg]) {
+    const f = T[seg], now = new Date().toISOString();
+    const clean = b => f.map(k => {
+      if (k === 'sort') return +b[k] || 0;
+      let v = String(b[k] ?? '').trim().slice(0, k === 'body' ? 4000 : 300);
+      if (k === 'image' && v && !v.startsWith('/img/')) v = '';
+      return v;
+    });
     if (req.method === 'POST') {
-      const b = await req.json(), f = T[seg];
-      const vals = f.map(k => {
-        if (k === 'sort') return +b[k] || 0;
-        let v = String(b[k] ?? '').trim().slice(0, k === 'body' ? 4000 : 300);
-        if (k === 'image' && v && !v.startsWith('/img/')) v = '';
-        return v;
-      });
+      const vals = clean(await req.json()), cols = [...f];
       if (!vals[0]) return J({ error: 'Missing required field' }, 400);
-      await env.DB.prepare(`INSERT INTO ${seg} (${f.join(',')}) VALUES (${f.map(() => '?').join(',')})`).bind(...vals).run();
+      if (seg === 'news') { cols.push('created_at'); vals.push(now); }
+      await env.DB.prepare(`INSERT INTO ${seg} (${cols.join(',')}) VALUES (${cols.map(() => '?').join(',')})`).bind(...vals).run();
+      return J({ ok: true });
+    }
+    if (req.method === 'PUT' && id) {
+      const vals = clean(await req.json()), sets = f.map(k => k + '=?');
+      if (!vals[0]) return J({ error: 'Missing required field' }, 400);
+      if (seg === 'news') { sets.push('updated_at=?'); vals.push(now); }
+      await env.DB.prepare(`UPDATE ${seg} SET ${sets.join(',')} WHERE id = ?`).bind(...vals, +id).run();
       return J({ ok: true });
     }
     if (req.method === 'DELETE' && id) {
@@ -53,4 +62,3 @@ export async function onRequest({ request: req, env, params }) {
   }
   return J({ error: 'not found' }, 404);
 }
-  

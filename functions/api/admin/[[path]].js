@@ -2,24 +2,28 @@ const J = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: 
 const b64u = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
 const T = { news: ['title', 'body', 'image'], heroes: ['name', 'role', 'image', 'sort'], staff: ['name', 'role', 'grp', 'badge', 'tone', 'sort'] };
 
-// Verifies the Cloudflare Access login token. Fails closed if not configured.
-async function isAdmin(req, env) {
+// Checks the Cloudflare Access login token. Returns null if valid, otherwise a short reason. Fails closed.
+async function check(req, env) {
+  if (!env.ACCESS_TEAM_DOMAIN || !env.ACCESS_AUD) return 'not-configured';
   const t = req.headers.get('Cf-Access-Jwt-Assertion');
-  if (!t || !env.ACCESS_TEAM_DOMAIN || !env.ACCESS_AUD) return false;
+  if (!t) return 'no-login-token';
   try {
     const [h, p, s] = t.split('.'), dec = x => JSON.parse(new TextDecoder().decode(b64u(x)));
     const head = dec(h), pay = dec(p);
-    if (pay.exp * 1000 < Date.now() || ![].concat(pay.aud).includes(env.ACCESS_AUD) || pay.iss !== `https://${env.ACCESS_TEAM_DOMAIN}`) return false;
+    if (pay.exp * 1000 < Date.now()) return 'expired';
+    if (![].concat(pay.aud).includes(env.ACCESS_AUD)) return 'wrong-aud';
+    if (pay.iss !== `https://${env.ACCESS_TEAM_DOMAIN}`) return 'wrong-team-domain';
     const jwks = await (await fetch(`https://${env.ACCESS_TEAM_DOMAIN}/cdn-cgi/access/certs`, { cf: { cacheTtl: 3600 } })).json();
     const jwk = jwks.keys.find(k => k.kid === head.kid);
-    if (!jwk) return false;
+    if (!jwk) return 'key-not-found';
     const key = await crypto.subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
-    return await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, b64u(s), new TextEncoder().encode(h + '.' + p));
-  } catch { return false; }
+    return (await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, b64u(s), new TextEncoder().encode(h + '.' + p))) ? null : 'bad-signature';
+  } catch { return 'invalid-token'; }
 }
 
 export async function onRequest({ request: req, env, params }) {
-  if (!(await isAdmin(req, env))) return J({ error: 'unauthorized' }, 401);
+  const why = await check(req, env);
+  if (why) return J({ error: 'unauthorized', reason: why }, 401);
   if (req.method !== 'GET' && req.headers.get('x-admin') !== '1') return J({ error: 'bad request' }, 400);
   const [seg, id] = params.path || [];
 

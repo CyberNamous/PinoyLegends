@@ -60,12 +60,32 @@
     const btn = (txt, fn) => { const b = document.createElement('button'); b.textContent = txt; b.className = 'btn btn--ghost'; b.type = 'button'; b.onclick = fn; return b; };
     const fmt = s => s ? new Date(s).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : '';
 
+    // Decode the photo in the browser (two methods), shrink it, and convert to WebP.
+    async function decode(file) {
+      try { return await createImageBitmap(file); } catch (e) { /* try the older method below */ }
+      return new Promise((res, rej) => {
+        const u = URL.createObjectURL(file), i = new Image();
+        i.onload = () => res(i);
+        i.onerror = () => rej(new Error('decode'));
+        i.src = u;
+      });
+    }
     async function shrink(file) {
-      const bmp = await createImageBitmap(file), s = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+      const ok = /^image\/(jpeg|png|webp)$/.test(file.type) && file.size <= 5e6;
+      let src;
+      try { src = await decode(file); }
+      catch (e) {
+        if (ok) return file; // upload the original if the browser cannot decode it
+        throw new Error('This file could not be read as an image. Pick it from your Gallery, or save it again as JPG or PNG, then try again.');
+      }
+      const w = src.width || src.naturalWidth, h = src.height || src.naturalHeight, s = Math.min(1, 1600 / Math.max(w, h));
       const c = document.createElement('canvas');
-      c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
-      c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
-      return new Promise(r => c.toBlob(r, 'image/webp', 0.85));
+      c.width = Math.round(w * s); c.height = Math.round(h * s);
+      c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+      const blob = await new Promise(r => c.toBlob(r, 'image/webp', 0.85));
+      if (blob) return blob;
+      if (ok) return file;
+      throw new Error('The image could not be converted. Try a JPG or PNG under 5 MB.');
     }
     async function upload(file) {
       const fd = new FormData(); fd.append('file', await shrink(file), 'image.webp');

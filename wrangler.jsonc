@@ -3,7 +3,7 @@
   "pages_build_output_dir": "./",
   "compatibility_date": "2025-10-01",
   "d1_databases": [
-    { "binding": "DB", "database_name": "pinoylegends-db", "database_id": "PASTE-YOUR-D1-DATABASE-ID" }
+    { "binding": "DB", "database_name": "pinoylegends-db", "database_id": "da9fb20a-12ea-42c2-b335-03c19d80d8f3" }
   ],
   "r2_buckets": [
     { "binding": "IMAGES", "bucket_name": "pinoylegends-images" }

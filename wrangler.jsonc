@@ -1,0 +1,15 @@
+{
+  "name": "pinoy-legends",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./", "binding": "ASSETS" },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "pinoylegends-db", "database_id": "PASTE-YOUR-D1-DATABASE-ID" }
+  ],
+  "r2_buckets": [
+    { "binding": "IMAGES", "bucket_name": "pinoylegends-images" }
+  ],
+  // Fill these in after you create the Access application (they are identifiers, not secrets).
+  // Until both are set, every admin request is refused.
+  "vars": { "ACCESS_TEAM_DOMAIN": "", "ACCESS_AUD": "" }
+}

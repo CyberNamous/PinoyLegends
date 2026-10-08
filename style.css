@@ -162,3 +162,14 @@ h1{font-size:clamp(2.5rem,6.5vw,4.75rem);margin-bottom:1.25rem}
 .legal li{margin-bottom:.35rem}
 .legal a{color:var(--gold)}
 .todo{background:rgba(244,185,66,.16);color:var(--gold);padding:0 .3rem;border-radius:3px}
+
+/* Content from the admin panel */
+.hero-card img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px}
+.news-card img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.admin form{display:grid;gap:.75rem;margin-bottom:1rem}
+.admin label{display:grid;gap:.25rem;font-weight:600}
+.admin input,.admin select,.admin textarea{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:.6rem .75rem}
+.admin ul{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.5rem}
+.admin li{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem .9rem;background:var(--bg);border:1px solid rgba(154,165,189,.14);border-radius:6px}
+.admin .btn--ghost{min-height:2.25rem;padding:.2rem .9rem;font-size:1rem}
+#msg{position:sticky;top:0;z-index:5;margin:0 0 1rem;padding:.5rem 0;background:var(--bg);color:var(--gold);font-weight:600}

@@ -19,9 +19,8 @@
       <h2 style="font-size:1.5rem;margin-bottom:1rem">News</h2>
       <form data-t="news">
         <label>Title<input name="title" required maxlength="300" /></label>
-        <label>Date<input name="date" type="date" required /></label>
         <label>Text<textarea name="body" rows="4" maxlength="4000"></textarea></label>
-        <label>Image (optional)<input name="file" type="file" accept="image/*" /></label>
+        <label>Image (optional; leave empty to keep the current one)<input name="file" type="file" accept="image/*" /></label>
         <button class="btn" type="submit">Post news</button>
       </form>
       <ul id="list-news"></ul>
@@ -33,7 +32,7 @@
         <label>Name<input name="name" required maxlength="300" /></label>
         <label>Role<input name="role" maxlength="300" /></label>
         <label>Order (lowest first)<input name="sort" type="number" value="0" /></label>
-        <label>Image<input name="file" type="file" accept="image/*" /></label>
+        <label>Image (leave empty to keep the current one)<input name="file" type="file" accept="image/*" /></label>
         <button class="btn" type="submit">Add hero</button>
       </form>
       <ul id="list-heroes"></ul>
@@ -58,6 +57,8 @@
     const msg = t => { document.getElementById('msg').textContent = t; };
     const api = (p, o = {}) => fetch('/api/admin/' + p, { ...o, headers: { 'x-admin': '1', ...(o.headers || {}) } })
       .then(async r => { const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error || r.status); return j; });
+    const btn = (txt, fn) => { const b = document.createElement('button'); b.textContent = txt; b.className = 'btn btn--ghost'; b.type = 'button'; b.onclick = fn; return b; };
+    const fmt = s => s ? new Date(s).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : '';
 
     async function shrink(file) {
       const bmp = await createImageBitmap(file), s = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
@@ -71,31 +72,63 @@
       return (await api('upload', { method: 'POST', body: fd })).url;
     }
 
-    const label = { news: x => `${x.date || ''} ${x.title}`, heroes: x => `${x.name} (${x.role || ''})`, staff: x => `${x.name}, ${x.role || ''} [${x.grp}]` };
+    const label = {
+      news: x => `${fmt(x.created_at) || x.date || ''}${x.updated_at ? ' (edited)' : ''}: ${x.title}`,
+      heroes: x => `${x.name} (${x.role || ''})`,
+      staff: x => `${x.name}, ${x.role || ''} [${x.grp}]`
+    };
+    const formOf = t => document.querySelector(`form[data-t="${t}"]`);
+    const submitBtn = f => f.querySelector('button[type=submit]');
+
+    function reset(f) {
+      f.reset(); delete f.dataset.id; delete f.dataset.img;
+      submitBtn(f).textContent = f.dataset.label;
+      const c = f.querySelector('.cancel'); if (c) c.remove();
+    }
+    function edit(t, x) {
+      const f = formOf(t);
+      for (const el of f.elements) if (el.name && el.name !== 'file' && x[el.name] != null) el.value = x[el.name];
+      f.dataset.id = x.id; f.dataset.img = x.image || '';
+      submitBtn(f).textContent = 'Save changes';
+      if (!f.querySelector('.cancel')) { const c = btn('Cancel', () => { reset(f); msg('Edit cancelled.'); }); c.classList.add('cancel'); f.append(c); }
+      f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      msg('Editing: ' + (x.title || x.name));
+    }
+
     async function load() {
       const d = await (await fetch('/api/content', { cache: 'no-store' })).json();
       for (const t of Object.keys(label)) {
         const ul = document.getElementById('list-' + t); ul.replaceChildren();
         for (const x of d[t]) {
-          const li = document.createElement('li'), s = document.createElement('span'), b = document.createElement('button');
-          s.textContent = label[t](x); b.textContent = 'Delete'; b.className = 'btn btn--ghost'; b.type = 'button';
-          b.onclick = async () => { if (!confirm('Delete "' + s.textContent + '"?')) return; try { await api(t + '/' + x.id, { method: 'DELETE' }); await load(); msg('Deleted'); } catch (e) { msg('Error: ' + e.message); } };
-          li.append(s, b); ul.append(li);
+          const li = document.createElement('li'), s = document.createElement('span'), box = document.createElement('span');
+          s.textContent = label[t](x);
+          box.append(
+            btn('Edit', () => edit(t, x)),
+            btn('Delete', async () => {
+              if (!confirm('Delete "' + s.textContent + '"?')) return;
+              try { await api(t + '/' + x.id, { method: 'DELETE' }); await load(); msg('Deleted'); } catch (e) { msg('Error: ' + e.message); }
+            })
+          );
+          li.append(s, box); ul.append(li);
         }
       }
     }
 
-    document.querySelectorAll('form[data-t]').forEach(f => f.addEventListener('submit', async e => {
-      e.preventDefault();
-      const t = f.dataset.t, b = Object.fromEntries(new FormData(f)), file = f.elements.file && f.elements.file.files[0], btn = f.querySelector('button');
-      delete b.file; btn.disabled = true; msg('Saving...');
-      try {
-        if (file) b.image = await upload(file);
-        await api(t, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(b) });
-        f.reset(); await load(); msg('Saved. The site updates within a minute.');
-      } catch (err) { msg('Error: ' + err.message); }
-      btn.disabled = false;
-    }));
+    document.querySelectorAll('form[data-t]').forEach(f => {
+      f.dataset.label = submitBtn(f).textContent;
+      f.addEventListener('submit', async e => {
+        e.preventDefault();
+        const t = f.dataset.t, id = f.dataset.id, sb = submitBtn(f), fi = f.elements.file, file = fi && fi.files[0];
+        const b = Object.fromEntries(new FormData(f)); delete b.file;
+        sb.disabled = true; msg('Saving...');
+        try {
+          b.image = file ? await upload(file) : (f.dataset.img || '');
+          await api(id ? t + '/' + id : t, { method: id ? 'PUT' : 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(b) });
+          reset(f); await load(); msg(id ? 'Changes saved.' : 'Saved. The site updates within a minute.');
+        } catch (err) { msg('Error: ' + err.message); }
+        sb.disabled = false;
+      });
+    });
 
     api('me').then(load).then(() => msg('Signed in.')).catch(() => msg('Not authorised. Check the Access setup.'));
   </script>

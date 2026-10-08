@@ -8,7 +8,8 @@
   "r2_buckets": [
     { "binding": "IMAGES", "bucket_name": "pinoylegends-images" }
   ],
-  // Fill these in after you create the Access application (identifiers, not passwords).
-  // Until both are set, every admin request is refused.
-  "vars": { "calm-flower-975f.cloudflareaccess.com": "", "b36f918ce7fc63d28597d54de7b03a5fd7792899f6c2de20a5accb34ce3f2db9": "" }
+  "vars": {
+    "ACCESS_TEAM_DOMAIN": "calm-flower-975f.cloudflareaccess.com",
+    "ACCESS_AUD": "b36f918ce7fc63d28597d54de7b03a5fd7792899f6c2de20a5accb34ce3f2db9"
+  }
 }

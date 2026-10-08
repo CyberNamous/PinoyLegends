@@ -1,0 +1,14 @@
+{
+  "name": "pinoylegends",
+  "pages_build_output_dir": "./",
+  "compatibility_date": "2025-10-01",
+  "d1_databases": [
+    { "binding": "DB", "database_name": "pinoylegends-db", "database_id": "PASTE-YOUR-D1-DATABASE-ID" }
+  ],
+  "r2_buckets": [
+    { "binding": "IMAGES", "bucket_name": "pinoylegends-images" }
+  ],
+  // Fill these in after you create the Access application (identifiers, not passwords).
+  // Until both are set, every admin request is refused.
+  "vars": { "ACCESS_TEAM_DOMAIN": "", "ACCESS_AUD": "" }
+}

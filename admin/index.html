@@ -56,7 +56,7 @@
   <script>
     const msg = t => { document.getElementById('msg').textContent = t; };
     const api = (p, o = {}) => fetch('/api/admin/' + p, { ...o, headers: { 'x-admin': '1', ...(o.headers || {}) } })
-      .then(async r => { const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error || r.status); return j; });
+      .then(async r => { const j = await r.json().catch(() => ({})); if (!r.ok) throw Object.assign(new Error(j.error || r.status), { reason: j.reason }); return j; });
     const btn = (txt, fn) => { const b = document.createElement('button'); b.textContent = txt; b.className = 'btn btn--ghost'; b.type = 'button'; b.onclick = fn; return b; };
     const fmt = s => s ? new Date(s).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : '';
 
@@ -130,7 +130,14 @@
       });
     });
 
-    api('me').then(load).then(() => msg('Signed in.')).catch(() => msg('Not authorised. Check the Access setup.'));
+    const hints = {
+      'not-configured': 'ACCESS_TEAM_DOMAIN or ACCESS_AUD is empty, or the deployment with your values is not live yet.',
+      'no-login-token': 'Cloudflare is not sending your login token. Check that api/admin* is a destination in the Access application, then sign in again.',
+      'wrong-aud': 'The AUD tag does not match this application. Copy it again from the Pages application Details.',
+      'wrong-team-domain': 'ACCESS_TEAM_DOMAIN is wrong. Use only yourteam.cloudflareaccess.com, with no https or slash.',
+      'expired': 'Your login expired. Reload the page.'
+    };
+    api('me').then(load).then(() => msg('Signed in.')).catch(e => msg(e.reason ? 'Not authorised: ' + (hints[e.reason] || e.reason) : 'Could not reach the admin service (' + e.message + '). Check that the functions folder deployed.'));
   </script>
 </body>
 </html>

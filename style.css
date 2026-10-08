@@ -173,3 +173,5 @@ h1{font-size:clamp(2.5rem,6.5vw,4.75rem);margin-bottom:1.25rem}
 .admin li{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem .9rem;background:var(--bg);border:1px solid rgba(154,165,189,.14);border-radius:6px}
 .admin .btn--ghost{min-height:2.25rem;padding:.2rem .9rem;font-size:1rem}
 #msg{position:sticky;top:0;z-index:5;margin:0 0 1rem;padding:.5rem 0;background:var(--bg);color:var(--gold);font-weight:600}
+.admin li>span:last-child{display:flex;gap:.5rem;flex:none}
+.news-body .edited{display:block;margin-top:.5rem;color:var(--muted);font-size:.9rem}

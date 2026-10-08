@@ -1,7 +1,7 @@
 export async function onRequestGet({ env }) {
   const q = s => env.DB.prepare(s).all().then(r => r.results);
   const body = JSON.stringify({
-    news: await q('SELECT * FROM news ORDER BY date DESC, id DESC LIMIT 12'),
+    news: await q('SELECT * FROM news ORDER BY COALESCE(created_at, date) DESC, id DESC LIMIT 12'),
     heroes: await q('SELECT * FROM heroes ORDER BY sort, id'),
     staff: await q('SELECT * FROM staff ORDER BY sort, id')
   });
